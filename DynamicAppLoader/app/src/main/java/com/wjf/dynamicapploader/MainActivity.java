@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        initPlugin();
+        //initPlugin();
         initView();
     }
 
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         mainWorkItems.add(new MainItem(getDrawable(R.mipmap.main_salary), "工资单", false));
         mainWorkItems.add(new MainItem(getDrawable(R.mipmap.main_performance), "绩效考核", false));
         mainWorkItems.add(new MainItem(getDrawable(R.mipmap.main_didi), "滴滴出行", false));
-        mainWorkItems.add(new MainItem(getDrawable(R.mipmap.ic_launcher), "test", false));
+        mainWorkItems.add(new MainItem(getDrawable(R.mipmap.main_update_gray), "更多应用", false));
 
         mainWorkAdapter = new MainItemAdapter(MainActivity.this, mainWorkItems);
         workGrid.setAdapter(mainWorkAdapter);
@@ -54,11 +54,13 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 5) {
 
-                    if (PluginManager.getInstance().isConnected()) {
-                        Intent i = new Intent("com.wjf.plugin.action.main");
-                        startActivity(i);
-                    }
+//                    if (PluginManager.getInstance().isConnected()) {
+//                        Intent i = new Intent("com.wjf.plugin.action.main");
+//                        startActivity(i);
+//                    }
 
+                    Intent i = new Intent(MainActivity.this, PluginStoreActivity.class);
+                    startActivity(i);
                 }
             }
         });
