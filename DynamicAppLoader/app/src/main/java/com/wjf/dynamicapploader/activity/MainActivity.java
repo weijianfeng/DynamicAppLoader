@@ -1,4 +1,4 @@
-package com.wjf.dynamicapploader;
+package com.wjf.dynamicapploader.activity;
 
 import android.content.ComponentName;
 import android.content.Intent;
@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.morgoo.droidplugin.pm.PluginManager;
+import com.wjf.dynamicapploader.R;
 import com.wjf.dynamicapploader.adapter.MainItemAdapter;
 import com.wjf.dynamicapploader.model.MainItem;
 

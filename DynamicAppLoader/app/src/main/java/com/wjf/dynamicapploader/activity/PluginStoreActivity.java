@@ -1,4 +1,4 @@
-package com.wjf.dynamicapploader;
+package com.wjf.dynamicapploader.activity;
 
 import android.content.ComponentName;
 import android.content.ServiceConnection;
@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.morgoo.droidplugin.pm.PluginManager;
+import com.wjf.dynamicapploader.R;
 import com.wjf.dynamicapploader.adapter.ApkListAdapter;
 import com.wjf.dynamicapploader.adapter.ApkOperator;
 import com.wjf.dynamicapploader.model.ApkItem;
