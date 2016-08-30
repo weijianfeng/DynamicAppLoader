@@ -1,9 +1,11 @@
 package com.wjf.dynamicapploader.activity;
 
+import android.app.DownloadManager;
 import android.content.ComponentName;
 import android.content.ServiceConnection;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
@@ -15,7 +17,11 @@ import com.morgoo.droidplugin.pm.PluginManager;
 import com.wjf.dynamicapploader.R;
 import com.wjf.dynamicapploader.adapter.ApkListAdapter;
 import com.wjf.dynamicapploader.adapter.ApkOperator;
+import com.wjf.dynamicapploader.eventbus.DownloadEvent;
 import com.wjf.dynamicapploader.model.ApkItem;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -59,10 +65,22 @@ public class PluginStoreActivity extends AppCompatActivity{
         setContentView(R.layout.activity_plugin);
 
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
 
         initView();
 
-        initPlugin();
+        //临时实现下
+        downloadPlugin();
+
+        //initPlugin();
+    }
+
+    private void downloadPlugin() {
+        DownloadManager downloadManager = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
+        String apkUrl = "http://cdn.sinacloud.net/apkbucket/app-debug.apk?KID=sina,rer1va47xccivHywUxLc&Expires=1472554493&ssig=%2BwsFEmCk3H";
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(apkUrl));
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "test.apk");
+        long downloadId = downloadManager.enqueue(request);
     }
 
     private void initView() {
@@ -125,6 +143,12 @@ public class PluginStoreActivity extends AppCompatActivity{
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+        EventBus.getDefault().unregister(this);
         PluginManager.getInstance().removeServiceConnection(mServiceConnection);
+    }
+
+    @Subscribe
+    public void onEvent(DownloadEvent event) {
+        initPlugin();
     }
 }
