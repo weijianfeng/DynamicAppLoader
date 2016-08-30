@@ -29,6 +29,11 @@ import com.wjf.dynamicapploader.model.MainItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 public class MainActivity extends AppCompatActivity {
 
     private GridView workGrid;
@@ -41,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     // 服务连接
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override public void onServiceConnected(ComponentName name, IBinder service) {
-            //loadApks();
+            loadApks();
         }
 
         @Override public void onServiceDisconnected(ComponentName name) {
@@ -54,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         initPlugin();
         initView();
@@ -85,6 +89,18 @@ public class MainActivity extends AppCompatActivity {
 
                     Intent i = new Intent(MainActivity.this, PluginStoreActivity.class);
                     startActivity(i);
+                }
+
+                if (mainWorkItems.get(position).packageInfo != null) {
+                    String appName = mainWorkItems.get(position).itemText;
+                    switch (appName) {
+                        case "PluginApp":
+                            Intent i = new Intent("com.wjf.plugin.action.main");
+                            startActivity(i);
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         });
@@ -117,11 +133,60 @@ public class MainActivity extends AppCompatActivity {
         mInstallApkReceiver.registerReceiver(this);
 
         if (PluginManager.getInstance().isConnected()) {
-            //loadApks();
+            loadApks();
         } else {
             PluginManager.getInstance().addServiceConnection(mServiceConnection);
         }
     }
+
+
+    // 加载Apk
+    private void loadApks() {
+        // 异步加载, 防止Apk过多, 影响速度
+        Observable.just(getApkFromInstall())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ArrayList<ApkItem>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<ApkItem> apkItems) {
+                        for (ApkItem apk : apkItems) {
+                            mainWorkAdapter.addMainItem(new MainItem(apk.icon, apk.title.toString(), true, apk.packageInfo));
+                        }
+                    }
+                });
+    }
+
+    // 在安装中获取Apk
+    private ArrayList<ApkItem> getApkFromInstall() {
+        ArrayList<ApkItem> apkItems = new ArrayList<>();
+        try {
+            final List<PackageInfo> infos = PluginManager.getInstance().getInstalledPackages(0);
+            if (infos == null) {
+                return apkItems;
+            }
+            final PackageManager pm = MainActivity.this.getPackageManager();
+            // noinspection all
+            for (final PackageInfo info : infos) {
+                apkItems.add(new ApkItem(pm, info, info.applicationInfo.publicSourceDir));
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+        return apkItems;
+    }
+
+
 
     // 安装Apk接收器
     private class InstallApkReceiver extends BroadcastReceiver {
@@ -149,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
                     String pkg = intent.getData().getAuthority();
                     PackageInfo info = PluginManager.getInstance().getPackageInfo(pkg, 0);
                     ApkItem apk = new ApkItem(pm, info, info.applicationInfo.publicSourceDir);
-                    mainWorkAdapter.addMainItem(new MainItem(apk.icon, apk.title.toString(), true));
+                    mainWorkAdapter.addMainItem(new MainItem(apk.icon, apk.title.toString(), true, apk.packageInfo));
                     //mApkListAdapter.addApkItem(new ApkItem(pm, info, info.applicationInfo.publicSourceDir));
                 } catch (Exception e) {
                     e.printStackTrace();
