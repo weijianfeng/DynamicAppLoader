@@ -1,13 +1,16 @@
 package com.wjf.dynamicapploader.adapter;
 
 import android.content.Context;
+import android.os.RemoteException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.morgoo.droidplugin.pm.PluginManager;
 import com.wjf.dynamicapploader.R;
 import com.wjf.dynamicapploader.model.MainItem;
 
@@ -69,16 +72,32 @@ public class MainItemAdapter extends BaseAdapter {
 
         ImageView appIcon = (ImageView)convertView.findViewById(R.id.item_main_icon);
         TextView appTitle = (TextView)convertView.findViewById(R.id.item_main_text);
-        ImageView deleteView = (ImageView)convertView.findViewById(R.id.item_main_icon);
+        ImageView deleteView = (ImageView)convertView.findViewById(R.id.delete_markView);
 
-        MainItem mainItem = mainItems.get(position);
+        final MainItem mainItem = mainItems.get(position);
 
         appIcon.setImageDrawable(mainItem.itemIcon);
         appTitle.setText(mainItem.itemText);
 
-        if (isDeleteIconVisible) {
+        if (isDeleteIconVisible && mainItem.isCanbeDeleted) {
             deleteView.setVisibility(View.VISIBLE);
         }
+
+        deleteView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (PluginManager.getInstance().isConnected()) {
+                    try {
+                        PluginManager.getInstance().deletePackage(mainItem.packageInfo.packageName, 0);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(context, "卸载插件失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         return convertView;
     }
 }

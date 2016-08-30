@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.morgoo.droidplugin.pm.PluginManager;
 import com.wjf.dynamicapploader.model.ApkItem;
+import com.wjf.dynamicapploader.model.MainItem;
 
 import java.io.File;
 
@@ -117,6 +118,33 @@ public class ApkOperator {
         builder.setNeutralButton("取消", null);
         builder.show();
     }
+
+    // 卸载Apk
+    public void uninstallApk(final MainItem item) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        builder.setTitle("警告");
+        builder.setMessage("警告，你确定要卸载" + item.itemText + "么？");
+        builder.setNegativeButton("卸载", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (!PluginManager.getInstance().isConnected()) {
+                    Toast.makeText(mActivity, "服务未连接", Toast.LENGTH_SHORT).show();
+                } else {
+                    try {
+                        PluginManager.getInstance().deletePackage(item.packageInfo.packageName, 0);
+                        //mCallback.removeItem(item);
+                        Toast.makeText(mActivity, "卸载完成", Toast.LENGTH_SHORT).show();
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        builder.setNeutralButton("取消", null);
+        builder.show();
+    }
+
+
 
     // 打开Apk
     public void openApk(final ApkItem item) {
