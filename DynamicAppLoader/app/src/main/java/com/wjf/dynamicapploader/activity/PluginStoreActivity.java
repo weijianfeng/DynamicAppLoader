@@ -69,15 +69,15 @@ public class PluginStoreActivity extends AppCompatActivity{
 
         initView();
 
-        //临时实现下
-        downloadPlugin();
+//        //临时实现下
+//        downloadPlugin();
 
-        //initPlugin();
+        initPlugin();
     }
 
     private void downloadPlugin() {
         DownloadManager downloadManager = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
-        String apkUrl = "http://cdn.sinacloud.net/apkbucket/app-debug.apk?KID=sina,rer1va47xccivHywUxLc&Expires=1472554493&ssig=%2BwsFEmCk3H";
+        String apkUrl = "http://pluginapk-plugin.stor.sinaapp.com/app-debug.apk";
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(apkUrl));
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "test.apk");
         long downloadId = downloadManager.enqueue(request);
