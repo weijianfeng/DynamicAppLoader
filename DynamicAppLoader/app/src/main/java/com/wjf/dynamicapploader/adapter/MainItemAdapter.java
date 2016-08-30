@@ -44,6 +44,17 @@ public class MainItemAdapter extends BaseAdapter {
         return position;
     }
 
+    public void addMainItem(MainItem mainItem) {
+        int index = getCount();
+        mainItems.add(index -1, mainItem);
+        notifyDataSetChanged();
+    }
+
+    public void removeMainItem(MainItem mainItem) {
+        mainItems.remove(mainItem);
+        notifyDataSetChanged();
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
