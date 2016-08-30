@@ -23,6 +23,7 @@ public class MainItemAdapter extends BaseAdapter {
 
     private Context context;
     private List<MainItem> mainItems;
+    private boolean isDeleteIconVisible = false;
 
     public MainItemAdapter(Context context, List<MainItem> mainItems) {
         this.context = context;
@@ -55,20 +56,29 @@ public class MainItemAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void setDeleteIconVisible() {
+        this.isDeleteIconVisible = true;
+        notifyDataSetChanged();
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_main, parent, false);
         }
 
-        ImageView imageView = (ImageView)convertView.findViewById(R.id.item_main_icon);
-        TextView textView = (TextView)convertView.findViewById(R.id.item_main_text);
+        ImageView appIcon = (ImageView)convertView.findViewById(R.id.item_main_icon);
+        TextView appTitle = (TextView)convertView.findViewById(R.id.item_main_text);
+        ImageView deleteView = (ImageView)convertView.findViewById(R.id.item_main_icon);
 
         MainItem mainItem = mainItems.get(position);
 
-        imageView.setImageDrawable(mainItem.itemIcon);
-        textView.setText(mainItem.itemText);
+        appIcon.setImageDrawable(mainItem.itemIcon);
+        appTitle.setText(mainItem.itemText);
 
+        if (isDeleteIconVisible) {
+            deleteView.setVisibility(View.VISIBLE);
+        }
         return convertView;
     }
 }

@@ -104,6 +104,18 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        workGrid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                if (mainWorkItems.get(position).isCanbeDeleted) {
+                    mainWorkAdapter.setDeleteIconVisible();
+                }
+
+                return true;
+            }
+        });
     }
 
     private void initPlugin() {
