@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         workGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mainWorkAdapter.setDeleteIconInvisible();
                 if (position == mainWorkItems.size() - 1) {
 
 //                    if (PluginManager.getInstance().isConnected()) {
@@ -108,7 +108,11 @@ public class MainActivity extends AppCompatActivity {
         workGrid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                mainWorkAdapter.setDeleteIconVisible();
+                if (mainWorkAdapter.isDeleteIconVisible()) {
+                    mainWorkAdapter.setDeleteIconInvisible();
+                } else {
+                    mainWorkAdapter.setDeleteIconVisible();
+                }
                 return true;
             }
         });
@@ -193,8 +197,6 @@ public class MainActivity extends AppCompatActivity {
 
         return apkItems;
     }
-
-
 
     // 安装Apk接收器
     private class InstallApkReceiver extends BroadcastReceiver {

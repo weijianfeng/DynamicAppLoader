@@ -64,6 +64,15 @@ public class MainItemAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void setDeleteIconInvisible() {
+        this.isDeleteIconVisible = false;
+        notifyDataSetChanged();
+    }
+
+    public boolean isDeleteIconVisible() {
+        return this.isDeleteIconVisible;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
@@ -81,6 +90,8 @@ public class MainItemAdapter extends BaseAdapter {
 
         if (isDeleteIconVisible && mainItem.isCanbeDeleted) {
             deleteView.setVisibility(View.VISIBLE);
+        } else {
+            deleteView.setVisibility(View.GONE);
         }
 
         deleteView.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +103,7 @@ public class MainItemAdapter extends BaseAdapter {
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
+                    setDeleteIconInvisible();
                 } else {
                     Toast.makeText(context, "卸载插件失败", Toast.LENGTH_SHORT).show();
                 }
