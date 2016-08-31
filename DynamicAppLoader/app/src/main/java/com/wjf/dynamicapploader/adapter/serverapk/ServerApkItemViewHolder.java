@@ -1,4 +1,4 @@
-package com.wjf.dynamicapploader.adapter;
+package com.wjf.dynamicapploader.adapter.serverapk;
 
 import android.app.Activity;
 import android.app.DownloadManager;

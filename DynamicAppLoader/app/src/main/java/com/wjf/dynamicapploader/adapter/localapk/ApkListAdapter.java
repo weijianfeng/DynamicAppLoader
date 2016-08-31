@@ -1,4 +1,4 @@
-package com.wjf.dynamicapploader.adapter;
+package com.wjf.dynamicapploader.adapter.localapk;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.wjf.dynamicapploader.R;
+import com.wjf.dynamicapploader.adapter.ApkOperator;
+import com.wjf.dynamicapploader.adapter.localapk.ApkItemViewHolder;
 import com.wjf.dynamicapploader.model.ApkItem;
 
 import java.util.ArrayList;

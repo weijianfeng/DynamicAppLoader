@@ -1,4 +1,4 @@
-package com.wjf.dynamicapploader.adapter;
+package com.wjf.dynamicapploader.adapter.localapk;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wjf.dynamicapploader.R;
+import com.wjf.dynamicapploader.adapter.ApkOperator;
 import com.wjf.dynamicapploader.model.ApkItem;
 
 import butterknife.Bind;

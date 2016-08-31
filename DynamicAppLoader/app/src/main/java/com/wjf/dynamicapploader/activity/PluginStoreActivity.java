@@ -42,8 +42,8 @@ public class PluginStoreActivity extends AppCompatActivity{
 
     private void initView() {
         mFragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
-        mFragmentAdapter.addFragment(new LocalApkFragment(), "已安装插件");
         mFragmentAdapter.addFragment(new ServerApkFragment(),"所有插件");
+        mFragmentAdapter.addFragment(new LocalApkFragment(), "已下载插件");
         mViewPager.setAdapter(mFragmentAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
     }

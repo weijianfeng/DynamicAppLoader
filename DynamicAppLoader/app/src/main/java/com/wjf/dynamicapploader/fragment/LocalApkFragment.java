@@ -1,12 +1,9 @@
 package com.wjf.dynamicapploader.fragment;
 
-import android.app.DownloadManager;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.ServiceConnection;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
@@ -20,7 +17,7 @@ import android.view.ViewGroup;
 
 import com.morgoo.droidplugin.pm.PluginManager;
 import com.wjf.dynamicapploader.R;
-import com.wjf.dynamicapploader.adapter.ApkListAdapter;
+import com.wjf.dynamicapploader.adapter.localapk.ApkListAdapter;
 import com.wjf.dynamicapploader.adapter.ApkOperator;
 import com.wjf.dynamicapploader.model.ApkItem;
 

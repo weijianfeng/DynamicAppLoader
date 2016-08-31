@@ -1,6 +1,5 @@
 package com.wjf.dynamicapploader.fragment;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,9 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.wjf.dynamicapploader.R;
-import com.wjf.dynamicapploader.adapter.ApkListAdapter;
-import com.wjf.dynamicapploader.adapter.ApkOperator;
-import com.wjf.dynamicapploader.adapter.ServerApkListAdapter;
+import com.wjf.dynamicapploader.adapter.serverapk.ServerApkListAdapter;
 import com.wjf.dynamicapploader.model.ServerApkItem;
 
 import butterknife.Bind;
