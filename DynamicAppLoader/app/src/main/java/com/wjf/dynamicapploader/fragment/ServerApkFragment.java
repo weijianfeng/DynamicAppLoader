@@ -45,7 +45,6 @@ public class ServerApkFragment extends Fragment {
     }
 
     private void initView() {
-
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRvRecycler.setLayoutManager(llm);
@@ -54,8 +53,9 @@ public class ServerApkFragment extends Fragment {
     }
 
     private void initData() {
-        ServerApkItem item = new ServerApkItem(null, "Plugin", "a test app",
-                "http://pluginapk-plugin.stor.sinaapp.com/app-debug.apk");
+        ServerApkItem item = new ServerApkItem("http://pluginapk-plugin.stor.sinaapp.com/youzancoin_icon.png",
+                "有赞币", "an app to appreciate others",
+                "http://pluginapk-plugin.stor.sinaapp.com/youzancoin.apk");
         mServerApkListAdapter.addItem(item);
     }
 

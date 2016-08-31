@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.wjf.dynamicapploader.R;
 import com.wjf.dynamicapploader.model.ServerApkItem;
 
@@ -47,6 +48,10 @@ public class ServerApkItemViewHolder extends RecyclerView.ViewHolder {
     public void bindTo(ServerApkItem serverApkItem) {
         mServerApkItem = serverApkItem;
 
+        Picasso.with(mContext).load(mServerApkItem.appIconURL)
+                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher)
+                .into(mAppIcon);
         mAppName.setText(serverApkItem.appName);
         mAppBrief.setText(serverApkItem.appBrief);
 
