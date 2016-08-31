@@ -1,9 +1,12 @@
 package com.wjf.dynamicapploader.fragment;
 
+import android.app.DownloadManager;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.ServiceConnection;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
@@ -62,9 +65,8 @@ public class LocalApkFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.activity_plugin, container, false);
+        View view = inflater.inflate(R.layout.fragment_plugin, container, false);
         ButterKnife.bind(this, view);
-        EventBus.getDefault().register(this);
         return view;
     }
 
@@ -136,5 +138,13 @@ public class LocalApkFragment extends Fragment{
             }
         }
         return apkItems;
+    }
+
+    private void downloadPlugin() {
+        DownloadManager downloadManager = (DownloadManager)getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+        String apkUrl = "http://pluginapk-plugin.stor.sinaapp.com/app-debug.apk";
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(apkUrl));
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "test.apk");
+        long downloadId = downloadManager.enqueue(request);
     }
 }
