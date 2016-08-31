@@ -45,7 +45,7 @@ import rx.schedulers.Schedulers;
 public class LocalApkFragment extends Fragment{
 
 
-    @Bind(R.id.list_rv_recycler)
+    @Bind(R.id.list_localapk)
     RecyclerView mRvRecycler;
 
     private ApkListAdapter mStoreAdapter; // 适配器
@@ -64,7 +64,6 @@ public class LocalApkFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_plugin, container, false);
         ButterKnife.bind(this, view);
         return view;
@@ -138,13 +137,5 @@ public class LocalApkFragment extends Fragment{
             }
         }
         return apkItems;
-    }
-
-    private void downloadPlugin() {
-        DownloadManager downloadManager = (DownloadManager)getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
-        String apkUrl = "http://pluginapk-plugin.stor.sinaapp.com/app-debug.apk";
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(apkUrl));
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "test.apk");
-        long downloadId = downloadManager.enqueue(request);
     }
 }
