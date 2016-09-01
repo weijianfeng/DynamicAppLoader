@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 if (mainWorkItems.get(position).packageInfo != null) {
                     String appName = mainWorkItems.get(position).itemText;
                     switch (appName) {
-                        case "PluginApp":
+                        case "有赞币":
                             Intent i = new Intent("com.wjf.plugin.action.main");
                             startActivity(i);
                             break;
