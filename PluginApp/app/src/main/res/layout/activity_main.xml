@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".MyTestActivity">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Data from Bundle:"
+        android:layout_alignParentTop="true" android:layout_alignParentStart="true"
+        android:id="@+id/tv_bundle_title"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/tv_bundle"
+        android:layout_below="@+id/tv_bundle_title" android:layout_alignParentStart="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Host Data with a simple way"
+        android:id="@+id/bt_sp"
+        android:layout_below="@+id/tv_bundle" android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"/>
+
+    <TextView
+        android:text="null"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:id="@+id/tv_sp"
+        android:layout_below="@+id/bt_sp" android:layout_alignParentStart="true"/>
+
+
+
+</RelativeLayout>
