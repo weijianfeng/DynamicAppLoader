@@ -1,6 +1,7 @@
 package com.wjf.dynamicapploader.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.RemoteException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,7 +85,6 @@ public class MainItemAdapter extends BaseAdapter {
         ImageView deleteView = (ImageView)convertView.findViewById(R.id.delete_markView);
 
         final MainItem mainItem = mainItems.get(position);
-
         appIcon.setImageDrawable(mainItem.itemIcon);
         appTitle.setText(mainItem.itemText);
 

@@ -1,7 +1,9 @@
 package com.wjf.dynamicapploader.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -38,7 +40,16 @@ public class SplashActivity extends Activity{
             @Override
             public void run() {
                 mParticleView.startAnim();
+                writeSharedPreferences();
             }
         }, 200);
+    }
+
+    // 预设sp内容
+    private void writeSharedPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences("test", Context.MODE_WORLD_READABLE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("key", "Data in HostApp.");
+        editor.commit();
     }
 }

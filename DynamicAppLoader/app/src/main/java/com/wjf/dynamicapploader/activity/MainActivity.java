@@ -92,10 +92,13 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (mainWorkItems.get(position).packageInfo != null) {
-                    String appName = mainWorkItems.get(position).itemText;
-                    switch (appName) {
-                        case "有赞币":
+                    String appPackageName = mainWorkItems.get(position).packageInfo.packageName;
+                    switch (appPackageName) {
+                        case "com.wjf.pluginapp":
+                            Bundle bundle = new Bundle();
+                            bundle.putString("host", "date from bundle from host app.");
                             Intent i = new Intent("com.wjf.plugin.action.main");
+                            i.putExtras(bundle);
                             startActivity(i);
                             break;
                         default:
