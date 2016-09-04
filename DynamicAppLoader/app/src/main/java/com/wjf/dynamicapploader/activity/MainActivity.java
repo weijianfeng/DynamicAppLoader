@@ -19,12 +19,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.morgoo.droidplugin.pm.PluginManager;
+import com.wjf.dynamicapploader.ILocalDataManager;
 import com.wjf.dynamicapploader.R;
 import com.wjf.dynamicapploader.adapter.MainItemAdapter;
 import com.wjf.dynamicapploader.model.ApkItem;
 import com.wjf.dynamicapploader.model.MainItem;
+import com.wjf.dynamicapploader.service.HostDataService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +64,29 @@ public class MainActivity extends AppCompatActivity {
 
         initPlugin();
         initView();
+
+        Intent i = new Intent(this, HostDataService.class);
+        bindService(i, mConnection, Context.BIND_AUTO_CREATE);
     }
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            ILocalDataManager localDataManager = ILocalDataManager.Stub.asInterface(service);
+            try {
+                String str = localDataManager.getData();
+                Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
 
     private void initView() {
         workGrid = (GridView)findViewById(R.id.main_work_grid);

@@ -33,6 +33,13 @@
                 <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED"/>
             </intent-filter>
         </receiver>
+
+        <service android:name="com.wjf.dynamicapploader.service.HostDataService"
+                 android:process=":remote">
+            <intent-filter>
+                <action android:name="android.intent.action.HostDataService" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
