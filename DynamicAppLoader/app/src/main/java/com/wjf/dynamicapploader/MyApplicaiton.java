@@ -14,9 +14,12 @@ import com.morgoo.droidplugin.pm.PluginManager;
  */
 public class MyApplicaiton extends Application {
 
+    private static Context context;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        context = getApplicationContext();
         PluginHelper.getInstance().applicationOnCreate(getBaseContext());
     }
 
@@ -24,5 +27,9 @@ public class MyApplicaiton extends Application {
     protected void attachBaseContext(Context base) {
         PluginHelper.getInstance().applicationAttachBaseContext(base);
         super.attachBaseContext(base);
+    }
+
+    public static Context getAppContext() {
+        return context;
     }
 }

@@ -40,6 +40,13 @@
                 <action android:name="android.intent.action.HostDataService" />
             </intent-filter>
         </service>
+
+        <service android:name=".service.HostMessengerService"
+                 android:process=":remote">
+            <intent-filter>
+                <action android:name="android.intent.action.HostMessengerService" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

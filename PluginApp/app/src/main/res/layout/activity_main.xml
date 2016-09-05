@@ -39,7 +39,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Get host data from aidl"
+        android:text="Get host data by aidl"
         android:id="@+id/bt_aidl" android:layout_below="@+id/tv_sp"
         android:layout_alignParentStart="true" android:layout_alignEnd="@+id/bt_sp"/>
     <TextView
@@ -47,6 +47,18 @@
         android:layout_height="wrap_content"
         android:text="null"
         android:id="@+id/tv_aidl" android:layout_below="@+id/bt_aidl"
+        android:layout_alignParentStart="true"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get host data by messenger"
+        android:id="@+id/bt_messenger" android:layout_below="@+id/tv_aidl"
+        android:layout_alignParentStart="true" android:layout_alignParentEnd="true"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="null"
+        android:id="@+id/tv_messenger" android:layout_below="@+id/bt_messenger"
         android:layout_alignParentStart="true"/>
 
 

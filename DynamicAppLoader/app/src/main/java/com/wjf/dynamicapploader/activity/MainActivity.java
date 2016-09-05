@@ -64,29 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         initPlugin();
         initView();
-
-        Intent i = new Intent(this, HostDataService.class);
-        bindService(i, mConnection, Context.BIND_AUTO_CREATE);
     }
-
-    private ServiceConnection mConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            ILocalDataManager localDataManager = ILocalDataManager.Stub.asInterface(service);
-            try {
-                String str = localDataManager.getData();
-                Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-
-        }
-    };
 
     private void initView() {
         workGrid = (GridView)findViewById(R.id.main_work_grid);
