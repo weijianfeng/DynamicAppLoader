@@ -8,26 +8,20 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
-import android.os.Environment;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.morgoo.droidplugin.pm.PluginManager;
-import com.wjf.dynamicapploader.ILocalDataManager;
 import com.wjf.dynamicapploader.R;
 import com.wjf.dynamicapploader.adapter.MainItemAdapter;
-import com.wjf.dynamicapploader.model.ApkItem;
+import com.wjf.dynamicapploader.model.LocalApkItem;
 import com.wjf.dynamicapploader.model.MainItem;
-import com.wjf.dynamicapploader.service.HostDataService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -164,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
         Observable.just(getApkFromInstall())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ArrayList<ApkItem>>() {
+                .subscribe(new Observer<ArrayList<LocalApkItem>>() {
                     @Override
                     public void onCompleted() {
 
@@ -176,32 +170,32 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onNext(ArrayList<ApkItem> apkItems) {
-                        for (ApkItem apk : apkItems) {
-                            mainWorkAdapter.addMainItem(new MainItem(apk.icon, apk.title.toString(), true, apk.packageInfo));
+                    public void onNext(ArrayList<LocalApkItem> localApkItems) {
+                        for (LocalApkItem apk : localApkItems) {
+                            mainWorkAdapter.addMainItem(new MainItem(apk.icon, apk.name.toString(), true, apk.packageInfo));
                         }
                     }
                 });
     }
 
     // 在安装中获取Apk
-    private ArrayList<ApkItem> getApkFromInstall() {
-        ArrayList<ApkItem> apkItems = new ArrayList<>();
+    private ArrayList<LocalApkItem> getApkFromInstall() {
+        ArrayList<LocalApkItem> localApkItems = new ArrayList<>();
         try {
             final List<PackageInfo> infos = PluginManager.getInstance().getInstalledPackages(0);
             if (infos == null) {
-                return apkItems;
+                return localApkItems;
             }
             final PackageManager pm = MainActivity.this.getPackageManager();
             // noinspection all
             for (final PackageInfo info : infos) {
-                apkItems.add(new ApkItem(pm, info, info.applicationInfo.publicSourceDir));
+                localApkItems.add(new LocalApkItem(pm, info, info.applicationInfo.publicSourceDir));
             }
         } catch (RemoteException e) {
             e.printStackTrace();
         }
 
-        return apkItems;
+        return localApkItems;
     }
 
     // 安装Apk接收器
@@ -229,9 +223,9 @@ public class MainActivity extends AppCompatActivity {
                     PackageManager pm = MainActivity.this.getPackageManager();
                     String pkg = intent.getData().getAuthority();
                     PackageInfo info = PluginManager.getInstance().getPackageInfo(pkg, 0);
-                    ApkItem apk = new ApkItem(pm, info, info.applicationInfo.publicSourceDir);
-                    mainWorkAdapter.addMainItem(new MainItem(apk.icon, apk.title.toString(), true, apk.packageInfo));
-                    //mApkListAdapter.addApkItem(new ApkItem(pm, info, info.applicationInfo.publicSourceDir));
+                    LocalApkItem apk = new LocalApkItem(pm, info, info.applicationInfo.publicSourceDir);
+                    mainWorkAdapter.addMainItem(new MainItem(apk.icon, apk.name.toString(), true, apk.packageInfo));
+                    //mApkListAdapter.addApkItem(new LocalApkItem(pm, info, info.applicationInfo.publicSourceDir));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -239,10 +233,10 @@ public class MainActivity extends AppCompatActivity {
                 String pkg = intent.getData().getAuthority();
                 //int num = mApkListAdapter.getCount();
                 int num = mainWorkAdapter.getCount();
-//                ApkItem removedItem = null;
+//                LocalApkItem removedItem = null;
                 MainItem removedItem = null;
                 for (int i = 0; i < num; i++) {
-                    //ApkItem item = mApkListAdapter.getApkItem(i);
+                    //LocalApkItem item = mApkListAdapter.getApkItem(i);
                     MainItem item = (MainItem)mainWorkAdapter.getItem(i);
                     if (item.packageInfo == null) {
                         continue;

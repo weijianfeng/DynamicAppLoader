@@ -11,17 +11,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.morgoo.droidplugin.pm.PluginManager;
 import com.wjf.dynamicapploader.R;
-import com.wjf.dynamicapploader.adapter.localapk.ApkListAdapter;
+import com.wjf.dynamicapploader.adapter.localapk.LocalApkListAdapter;
 import com.wjf.dynamicapploader.adapter.ApkOperator;
 import com.wjf.dynamicapploader.eventbus.DownloadEvent;
-import com.wjf.dynamicapploader.model.ApkItem;
+import com.wjf.dynamicapploader.model.LocalApkItem;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -48,7 +47,7 @@ public class LocalApkFragment extends Fragment{
     @Bind(R.id.list_localapk)
     RecyclerView mRvRecycler;
 
-    private ApkListAdapter mStoreAdapter; // 适配器
+    private LocalApkListAdapter mStoreAdapter; // 适配器
 
 
     // 服务连接
@@ -90,7 +89,7 @@ public class LocalApkFragment extends Fragment{
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRvRecycler.setLayoutManager(llm);
-        mStoreAdapter = new ApkListAdapter(getActivity(), ApkOperator.TYPE_STORE);
+        mStoreAdapter = new LocalApkListAdapter(getActivity(), ApkOperator.TYPE_STORE);
         mRvRecycler.setAdapter(mStoreAdapter);
     }
 
@@ -108,7 +107,7 @@ public class LocalApkFragment extends Fragment{
         Observable.just(getApkFromDownload())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ArrayList<ApkItem>>() {
+                .subscribe(new Observer<ArrayList<LocalApkItem>>() {
                     @Override
                     public void onCompleted() {
 
@@ -120,24 +119,24 @@ public class LocalApkFragment extends Fragment{
                     }
 
                     @Override
-                    public void onNext(ArrayList<ApkItem> apkItems) {
-                        mStoreAdapter.setApkItems(apkItems);
+                    public void onNext(ArrayList<LocalApkItem> localApkItems) {
+                        mStoreAdapter.setApkItems(localApkItems);
                     }
                 });
     }
 
     // 从下载文件夹获取Apk
-    private ArrayList<ApkItem> getApkFromDownload() {
+    private ArrayList<LocalApkItem> getApkFromDownload() {
         File files = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         PackageManager pm = getActivity().getPackageManager();
-        ArrayList<ApkItem> apkItems = new ArrayList<>();
+        ArrayList<LocalApkItem> localApkItems = new ArrayList<>();
         for (File file : files.listFiles()) {
             if (file.exists() && file.getPath().toLowerCase().endsWith(".apk")) {
                 final PackageInfo info = pm.getPackageArchiveInfo(file.getPath(), 0);
-                apkItems.add(new ApkItem(pm, info, file.getPath()));
+                localApkItems.add(new LocalApkItem(pm, info, file.getPath()));
             }
         }
-        return apkItems;
+        return localApkItems;
     }
 
     @Subscribe

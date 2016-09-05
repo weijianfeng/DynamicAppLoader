@@ -10,7 +10,7 @@ import android.os.RemoteException;
 import android.widget.Toast;
 
 import com.morgoo.droidplugin.pm.PluginManager;
-import com.wjf.dynamicapploader.model.ApkItem;
+import com.wjf.dynamicapploader.model.LocalApkItem;
 import com.wjf.dynamicapploader.model.MainItem;
 
 import java.io.File;
@@ -35,10 +35,10 @@ public class ApkOperator {
     }
 
     // 删除Apk
-    public void deleteApk(final ApkItem item) {
+    public void deleteApk(final LocalApkItem item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
         builder.setTitle("警告");
-        builder.setMessage("你确定要删除" + item.title + "么？");
+        builder.setMessage("你确定要删除" + item.name + "么？");
         builder.setNegativeButton("删除", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -60,7 +60,7 @@ public class ApkOperator {
      * @param item Apk项
      * @return [0:成功, 1:已安装, -1:连接失败, -2:权限不足, -3:安装失败]
      */
-    public String installApk(final ApkItem item) {
+    public String installApk(final LocalApkItem item) {
         if (!PluginManager.getInstance().isConnected()) {
             return "连接失败"; // 连接失败
         }
@@ -84,10 +84,10 @@ public class ApkOperator {
     }
 
     // Apk是否安装
-    private boolean isApkInstall(ApkItem apkItem) {
+    private boolean isApkInstall(LocalApkItem localApkItem) {
         PackageInfo info = null;
         try {
-            info = PluginManager.getInstance().getPackageInfo(apkItem.packageInfo.packageName, 0);
+            info = PluginManager.getInstance().getPackageInfo(localApkItem.packageInfo.packageName, 0);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -95,10 +95,10 @@ public class ApkOperator {
     }
 
     // 卸载Apk
-    public void uninstallApk(final ApkItem item) {
+    public void uninstallApk(final LocalApkItem item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
         builder.setTitle("警告");
-        builder.setMessage("警告，你确定要卸载" + item.title + "么？");
+        builder.setMessage("警告，你确定要卸载" + item.name + "么？");
         builder.setNegativeButton("卸载", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -147,7 +147,7 @@ public class ApkOperator {
 
 
     // 打开Apk
-    public void openApk(final ApkItem item) {
+    public void openApk(final LocalApkItem item) {
         PackageManager pm = mActivity.getPackageManager();
         Intent intent = pm.getLaunchIntentForPackage(item.packageInfo.packageName);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -156,7 +156,7 @@ public class ApkOperator {
 
     // 删除Item回调, Adapter调用删除Item
     public interface RemoveCallback {
-        void removeItem(ApkItem apkItem);
+        void removeItem(LocalApkItem localApkItem);
     }
 
 }

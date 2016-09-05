@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.wjf.dynamicapploader.R;
 import com.wjf.dynamicapploader.adapter.ApkOperator;
-import com.wjf.dynamicapploader.model.ApkItem;
+import com.wjf.dynamicapploader.model.LocalApkItem;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
  * @author weijianfeng @Hangzhou Youzan Technology Co.Ltd
  * @date 16/8/29
  */
-public class ApkItemViewHolder extends RecyclerView.ViewHolder {
+public class LocalApkItemViewHolder extends RecyclerView.ViewHolder {
 
     @Bind(R.id.apk_item_iv_icon)
     ImageView mIvIcon; // 图标
@@ -35,7 +35,7 @@ public class ApkItemViewHolder extends RecyclerView.ViewHolder {
     @Bind(R.id.apk_item_delete)
     Button mDeleteButton;   // 删除
 
-    private ApkItem mApkItem; // Apk项
+    private LocalApkItem mLocalApkItem; // Apk项
     private Context mContext; // 上下文
     private ApkOperator mApkOperator; // Apk操作
     private int mType; // 类型
@@ -48,7 +48,7 @@ public class ApkItemViewHolder extends RecyclerView.ViewHolder {
      * @param type     类型, 加载或启动
      * @param callback 删除Item的调用
      */
-    public ApkItemViewHolder(Activity activity, View itemView
+    public LocalApkItemViewHolder(Activity activity, View itemView
             , int type, ApkOperator.RemoveCallback callback) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -58,12 +58,12 @@ public class ApkItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     // 绑定ViewHolder
-    public void bindTo(ApkItem apkItem) {
-        mApkItem = apkItem;
+    public void bindTo(LocalApkItem localApkItem) {
+        mLocalApkItem = localApkItem;
 
-        mIvIcon.setImageDrawable(apkItem.icon);
-        mTvTitle.setText(apkItem.title);
-        mTvVersion.setText(String.format("%s(%s)", apkItem.versionName, apkItem.versionCode));
+        mIvIcon.setImageDrawable(localApkItem.icon);
+        mTvTitle.setText(localApkItem.name);
+        mTvVersion.setText(String.format("%s(%s)", localApkItem.versionName, localApkItem.versionCode));
 
         mDownloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +75,7 @@ public class ApkItemViewHolder extends RecyclerView.ViewHolder {
         mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mApkOperator.deleteApk(mApkItem);
+                mApkOperator.deleteApk(mLocalApkItem);
             }
         });
     }
@@ -89,7 +89,7 @@ public class ApkItemViewHolder extends RecyclerView.ViewHolder {
 
         @Override
         protected String doInBackground(Void... params) {
-            return mApkOperator.installApk(mApkItem);
+            return mApkOperator.installApk(mLocalApkItem);
         }
     }
 }
