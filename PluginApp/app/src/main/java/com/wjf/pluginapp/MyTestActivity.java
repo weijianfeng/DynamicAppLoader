@@ -20,19 +20,29 @@ import android.widget.Toast;
 
 import com.wjf.dynamicapploader.ILocalDataManager;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class MyTestActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final int MSG_FROM_PLUGIN = 1001;
     private static final int MSG_FROM_HOST = 1002;
 
-    private Button bt_sp;
-    private Button bt_aidl;
-    private Button bt_messenger;
+    @Bind(R.id.bt_sp)
+    Button bt_sp;
+    @Bind(R.id.bt_aidl)
+    Button bt_aidl;
+    @Bind(R.id.bt_messenger)
+    Button bt_messenger;
 
-    private TextView tv_bundle;
-    private TextView tv_sp;
-    private TextView tv_aidl;
-    private TextView tv_messenger;
+    @Bind(R.id.tv_bundle)
+    TextView tv_bundle;
+    @Bind(R.id.tv_sp)
+    TextView tv_sp;
+    @Bind(R.id.tv_aidl)
+    TextView tv_aidl;
+    @Bind(R.id.tv_messenger)
+    TextView tv_messenger;
 
     private Messenger mMessenger;
 
@@ -40,6 +50,7 @@ public class MyTestActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         initView();
         initData();
@@ -106,14 +117,14 @@ public class MyTestActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void initView() {
-        tv_bundle = (TextView)findViewById(R.id.tv_bundle);
-        tv_sp = (TextView)findViewById(R.id.tv_sp);
-        tv_aidl = (TextView)findViewById(R.id.tv_aidl);
-        tv_messenger = (TextView)findViewById(R.id.tv_messenger);
-
-        bt_sp = (Button)findViewById(R.id.bt_sp);
-        bt_aidl = (Button)findViewById(R.id.bt_aidl);
-        bt_messenger = (Button)findViewById(R.id.bt_messenger);
+//        tv_bundle = (TextView)findViewById(R.id.tv_bundle);
+//        tv_sp = (TextView)findViewById(R.id.tv_sp);
+//        tv_aidl = (TextView)findViewById(R.id.tv_aidl);
+//        tv_messenger = (TextView)findViewById(R.id.tv_messenger);
+//
+//        bt_sp = (Button)findViewById(R.id.bt_sp);
+//        bt_aidl = (Button)findViewById(R.id.bt_aidl);
+//        bt_messenger = (Button)findViewById(R.id.bt_messenger);
 
         bt_sp.setOnClickListener(this);
         bt_aidl.setOnClickListener(this);
@@ -172,6 +183,7 @@ public class MyTestActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ButterKnife.unbind(this);
         unbindService(mAIDLConnection);
         unbindService(mMessengerConnection);
     }

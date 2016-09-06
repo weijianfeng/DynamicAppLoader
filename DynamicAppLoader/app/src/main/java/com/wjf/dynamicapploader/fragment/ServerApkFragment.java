@@ -55,7 +55,7 @@ public class ServerApkFragment extends Fragment {
     private void initData() {
         ServerApkItem item = new ServerApkItem("http://pluginapk-plugin.stor.sinaapp.com/youzancoin_icon.png",
                 "有赞币", "an app to appreciate others",
-                "http://pluginapk-plugin.stor.sinaapp.com/youzancoin.apk");
+                "http://pluginapk-plugin.stor.sinaapp.com/youzancoin_1.apk");
         mServerApkListAdapter.addItem(item);
     }
 
