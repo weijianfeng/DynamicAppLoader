@@ -33,6 +33,7 @@ import butterknife.ButterKnife;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -107,19 +108,9 @@ public class LocalApkFragment extends Fragment{
         Observable.just(getApkFromDownload())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ArrayList<LocalApkItem>>() {
+                .subscribe(new Action1<ArrayList<LocalApkItem>>() {
                     @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(ArrayList<LocalApkItem> localApkItems) {
+                    public void call(ArrayList<LocalApkItem> localApkItems) {
                         mStoreAdapter.setApkItems(localApkItems);
                     }
                 });
