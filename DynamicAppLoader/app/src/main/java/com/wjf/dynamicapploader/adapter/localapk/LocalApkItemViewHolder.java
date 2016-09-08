@@ -10,8 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.wjf.dynamicapploader.R;
 import com.wjf.dynamicapploader.adapter.ApkOperator;
+import com.wjf.dynamicapploader.cache.LocalApkCache;
 import com.wjf.dynamicapploader.model.LocalApkItem;
 
 import butterknife.Bind;
@@ -61,7 +63,13 @@ public class LocalApkItemViewHolder extends RecyclerView.ViewHolder {
     public void bindTo(LocalApkItem localApkItem) {
         mLocalApkItem = localApkItem;
 
-        mIvIcon.setImageDrawable(localApkItem.icon);
+        //mIvIcon.setImageDrawable(localApkItem.icon);
+        Picasso.with(mContext).
+                load(LocalApkCache.getAppIconByPackageName(localApkItem.packageInfo.packageName))
+                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher)
+                .into(mIvIcon);
+
         mTvTitle.setText(localApkItem.name);
         mTvVersion.setText(String.format("%s(%s)", localApkItem.versionName, localApkItem.versionCode));
 

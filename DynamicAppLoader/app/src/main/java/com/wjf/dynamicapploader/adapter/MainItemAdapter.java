@@ -12,7 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.morgoo.droidplugin.pm.PluginManager;
+import com.squareup.picasso.Picasso;
 import com.wjf.dynamicapploader.R;
+import com.wjf.dynamicapploader.cache.LocalApkCache;
 import com.wjf.dynamicapploader.model.MainItem;
 
 import java.util.List;
@@ -85,7 +87,15 @@ public class MainItemAdapter extends BaseAdapter {
         ImageView deleteView = (ImageView)convertView.findViewById(R.id.delete_markView);
 
         final MainItem mainItem = mainItems.get(position);
-        appIcon.setImageDrawable(mainItem.itemIcon);
+        if (mainItem.isCanbeDeleted) {
+            Picasso.with(context).
+                    load(LocalApkCache.getAppIconByPackageName(mainItem.packageInfo.packageName))
+                    .placeholder(R.mipmap.ic_launcher)
+                    .error(R.mipmap.ic_launcher)
+                    .into(appIcon);
+        } else {
+            appIcon.setImageDrawable(mainItem.itemIcon);
+        }
         appTitle.setText(mainItem.itemText);
 
         if (isDeleteIconVisible && mainItem.isCanbeDeleted) {

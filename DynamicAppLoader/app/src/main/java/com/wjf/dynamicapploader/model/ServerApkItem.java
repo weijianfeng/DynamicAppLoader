@@ -24,10 +24,15 @@ public class ServerApkItem {
     @SerializedName("app_download_url")
     public String appDownloadURL;
 
-    public ServerApkItem(String appIconURL, String appName, String appBrief, String appDownloadURL) {
+    @SerializedName("app_package_name")
+    public String appPackageName;
+
+    public ServerApkItem(String appIconURL, String appName, String appBrief, String appDownloadURL,
+                         String appPackageName) {
         this.appIconURL = appIconURL;
         this.appName = appName;
         this.appBrief = appBrief;
         this.appDownloadURL = appDownloadURL;
+        this.appPackageName = appPackageName;
     }
 }

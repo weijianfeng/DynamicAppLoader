@@ -9,9 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.wjf.dynamicapploader.R;
 import com.wjf.dynamicapploader.adapter.serverapk.ServerApkListAdapter;
+import com.wjf.dynamicapploader.cache.LocalApkCache;
 import com.wjf.dynamicapploader.model.ServerApkItem;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -53,10 +59,24 @@ public class ServerApkFragment extends Fragment {
     }
 
     private void initData() {
-        ServerApkItem item = new ServerApkItem("http://pluginapk-plugin.stor.sinaapp.com/youzancoin_icon.png",
-                "有赞币", "an app to appreciate others",
-                "http://pluginapk-plugin.stor.sinaapp.com/youzancoin_1.apk");
-        mServerApkListAdapter.addItem(item);
+        LocalApkCache.clear();
+        String mock = "[{\"app_icon\":\"http://pluginapk-plugin.stor.sinaapp.com/youzancoin_icon.png\"," +
+                "\"app_name\":\"有赞币\"," +
+                "\"app_brief\":\"an app to appreciate others\"," +
+                "\"app_download_url\":\"http://pluginapk-plugin.stor.sinaapp.com/youzancoin_1.apk\"," +
+                "\"app_package_name\":\"com.wjf.pluginapp\"}]";
+
+        LocalApkCache.saveApkList(mock);
+        Type type = new TypeToken<List<ServerApkItem>>(){}.getType();
+        List<ServerApkItem> list = new Gson().fromJson(mock, type);
+
+//        ServerApkItem item = new ServerApkItem("http://pluginapk-plugin.stor.sinaapp.com/youzancoin_icon.png",
+//                "有赞币", "an app to appreciate others",
+//                "http://pluginapk-plugin.stor.sinaapp.com/youzancoin_1.apk",
+//                "com.wjf.pluginapp");
+        for(ServerApkItem item : list) {
+            mServerApkListAdapter.addItem(item);
+        }
     }
 
     @Override
