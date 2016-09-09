@@ -13,6 +13,7 @@ import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -29,6 +30,7 @@ import java.util.List;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        int pid = android.os.Process.myPid();
+        Log.i("DynamicAppLoader", "Host App pid is: " + pid);
 
         initPlugin();
         initView();
@@ -158,19 +163,9 @@ public class MainActivity extends AppCompatActivity {
         Observable.just(getApkFromInstall())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ArrayList<LocalApkItem>>() {
+                .subscribe(new Action1<ArrayList<LocalApkItem>>() {
                     @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(ArrayList<LocalApkItem> localApkItems) {
+                    public void call(ArrayList<LocalApkItem> localApkItems) {
                         for (LocalApkItem apk : localApkItems) {
                             mainWorkAdapter.addMainItem(new MainItem(apk.icon, apk.name.toString(), true, apk.packageInfo));
                         }
