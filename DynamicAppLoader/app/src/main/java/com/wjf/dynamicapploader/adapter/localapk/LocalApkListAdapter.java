@@ -22,12 +22,10 @@ public class LocalApkListAdapter extends RecyclerView.Adapter<LocalApkItemViewHo
 
     private ArrayList<LocalApkItem> mLocalApkItems;
     private Activity mActivity;
-    private int mType; // 类型
 
-    public LocalApkListAdapter(Activity activity, int type) {
+    public LocalApkListAdapter(Activity activity) {
         mActivity = activity;
         mLocalApkItems = new ArrayList<>();
-        mType = type;
     }
 
     public void setApkItems(ArrayList<LocalApkItem> localApkItems) {
@@ -55,7 +53,7 @@ public class LocalApkListAdapter extends RecyclerView.Adapter<LocalApkItemViewHo
 
     @Override public LocalApkItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_apk, parent, false);
-        return new LocalApkItemViewHolder(mActivity, view, mType, new ApkOperator.RemoveCallback() {
+        return new LocalApkItemViewHolder(mActivity, view, new ApkOperator.RemoveCallback() {
             @Override
             public void removeItem(LocalApkItem localApkItem) {
                 removeApkItem(localApkItem);

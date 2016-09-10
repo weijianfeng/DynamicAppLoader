@@ -69,11 +69,7 @@ public class ServerApkFragment extends Fragment {
         LocalApkCache.saveApkList(mock);
         Type type = new TypeToken<List<ServerApkItem>>(){}.getType();
         List<ServerApkItem> list = new Gson().fromJson(mock, type);
-
-//        ServerApkItem item = new ServerApkItem("http://pluginapk-plugin.stor.sinaapp.com/youzancoin_icon.png",
-//                "有赞币", "an app to appreciate others",
-//                "http://pluginapk-plugin.stor.sinaapp.com/youzancoin_1.apk",
-//                "com.wjf.pluginapp");
+        
         for(ServerApkItem item : list) {
             mServerApkListAdapter.addItem(item);
         }

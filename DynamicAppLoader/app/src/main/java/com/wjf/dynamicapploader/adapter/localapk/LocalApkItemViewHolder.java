@@ -28,10 +28,11 @@ import butterknife.ButterKnife;
 public class LocalApkItemViewHolder extends RecyclerView.ViewHolder {
 
     @Bind(R.id.apk_item_iv_icon)
-    ImageView mIvIcon; // 图标
+    ImageView mAppIcon; // 图标
     @Bind(R.id.apk_item_tv_title)
-    TextView mTvTitle; // 标题
-    @Bind(R.id.apk_item_tv_version) TextView mTvVersion; // 版本号
+    TextView mAppTitle; // 标题
+    @Bind(R.id.apk_item_tv_version)
+    TextView mAppVersion; // 版本号
     @Bind(R.id.apk_item_button)
     Button mDownloadButton; // 下载
     @Bind(R.id.apk_item_delete)
@@ -40,38 +41,35 @@ public class LocalApkItemViewHolder extends RecyclerView.ViewHolder {
     private LocalApkItem mLocalApkItem; // Apk项
     private Context mContext; // 上下文
     private ApkOperator mApkOperator; // Apk操作
-    private int mType; // 类型
 
     /**
      * 初始化ViewHolder
      *
      * @param activity Dialog绑定Activity
      * @param itemView 项视图
-     * @param type     类型, 加载或启动
      * @param callback 删除Item的调用
      */
     public LocalApkItemViewHolder(Activity activity, View itemView
-            , int type, ApkOperator.RemoveCallback callback) {
+            , ApkOperator.RemoveCallback callback) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         mContext = activity.getApplicationContext();
         mApkOperator = new ApkOperator(activity, callback); // Apk操作
-        mType = type; // 类型
     }
 
     // 绑定ViewHolder
     public void bindTo(LocalApkItem localApkItem) {
         mLocalApkItem = localApkItem;
 
-        //mIvIcon.setImageDrawable(localApkItem.icon);
+        //mAppIcon.setImageDrawable(localApkItem.icon);
         Picasso.with(mContext).
                 load(LocalApkCache.getAppIconByPackageName(localApkItem.packageInfo.packageName))
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
-                .into(mIvIcon);
+                .into(mAppIcon);
 
-        mTvTitle.setText(localApkItem.name);
-        mTvVersion.setText(String.format("%s(%s)", localApkItem.versionName, localApkItem.versionCode));
+        mAppTitle.setText(localApkItem.name);
+        mAppVersion.setText(String.format("%s(%s)", localApkItem.versionName, localApkItem.versionCode));
 
         mDownloadButton.setOnClickListener(new View.OnClickListener() {
             @Override

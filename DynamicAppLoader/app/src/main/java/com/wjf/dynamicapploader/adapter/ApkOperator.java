@@ -23,9 +23,6 @@ import java.io.File;
  */
 public class ApkOperator {
 
-    public static final int TYPE_STORE = 0; // 存储Apk
-    public static final int TYPE_START = 1; // 启动Apk
-
     private Activity mActivity;       // 绑定Dialog
     private RemoveCallback mCallback; // 删除Item的回调
 

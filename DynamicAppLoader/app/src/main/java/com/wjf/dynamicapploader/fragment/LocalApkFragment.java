@@ -90,7 +90,7 @@ public class LocalApkFragment extends Fragment{
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRvRecycler.setLayoutManager(llm);
-        mStoreAdapter = new LocalApkListAdapter(getActivity(), ApkOperator.TYPE_STORE);
+        mStoreAdapter = new LocalApkListAdapter(getActivity());
         mRvRecycler.setAdapter(mStoreAdapter);
     }
 

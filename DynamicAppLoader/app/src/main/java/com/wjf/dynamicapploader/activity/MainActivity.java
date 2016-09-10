@@ -83,12 +83,6 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mainWorkAdapter.setDeleteIconInvisible();
                 if (position == mainWorkItems.size() - 1) {
-
-//                    if (PluginManager.getInstance().isConnected()) {
-//                        Intent i = new Intent("com.wjf.plugin.action.main");
-//                        startActivity(i);
-//                    }
-
                     Intent i = new Intent(MainActivity.this, PluginStoreActivity.class);
                     startActivity(i);
                 }
@@ -125,25 +119,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void initPlugin() {
         PluginManager.getInstance().init(getApplication());
-//        final String filepath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/pluginapp.apk";
-//        PluginManager.getInstance().addServiceConnection(new ServiceConnection() {
-//            @Override
-//            public void onServiceConnected(ComponentName name, IBinder service) {
-//                int result = 0;
-//                try {
-//                    result = PluginManager.getInstance().installPackage(filepath, 0);
-//                } catch (RemoteException e) {
-//                    Log.i("WJFPlugin", "result " + e.getMessage());
-//                    e.printStackTrace();
-//                }
-//                Log.i("WJFPlugin", "result " + result);
-//            }
-//
-//            @Override
-//            public void onServiceDisconnected(ComponentName name) {
-//
-//            }
-//        });
 
         mInstallApkReceiver = new InstallApkReceiver();
 
