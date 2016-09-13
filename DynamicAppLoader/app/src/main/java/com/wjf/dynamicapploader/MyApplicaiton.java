@@ -3,6 +3,8 @@ package com.wjf.dynamicapploader;
 import android.app.Application;
 import android.content.Context;
 
+import com.aspsine.multithreaddownload.DownloadConfiguration;
+import com.aspsine.multithreaddownload.DownloadManager;
 import com.morgoo.droidplugin.PluginHelper;
 import com.morgoo.droidplugin.pm.PluginManager;
 
@@ -21,6 +23,7 @@ public class MyApplicaiton extends Application {
         super.onCreate();
         context = getApplicationContext();
         PluginHelper.getInstance().applicationOnCreate(getBaseContext());
+        initDownloader();
     }
 
     @Override
@@ -32,4 +35,12 @@ public class MyApplicaiton extends Application {
     public static Context getAppContext() {
         return context;
     }
+
+    private void initDownloader() {
+        DownloadConfiguration configuration = new DownloadConfiguration();
+        configuration.setMaxThreadNum(10);
+        configuration.setThreadNum(3);
+        DownloadManager.getInstance().init(getApplicationContext(), configuration);
+    }
+
 }

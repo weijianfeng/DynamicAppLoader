@@ -69,7 +69,7 @@ public class ServerApkFragment extends Fragment {
         LocalApkCache.saveApkList(mock);
         Type type = new TypeToken<List<ServerApkItem>>(){}.getType();
         List<ServerApkItem> list = new Gson().fromJson(mock, type);
-        
+
         for(ServerApkItem item : list) {
             mServerApkListAdapter.addItem(item);
         }

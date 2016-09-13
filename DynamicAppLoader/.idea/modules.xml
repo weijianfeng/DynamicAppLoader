@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/DowloadLibrary/DowloadLibrary.iml" filepath="$PROJECT_DIR$/DowloadLibrary/DowloadLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/DroidPlugin/DroidPlugin.iml" filepath="$PROJECT_DIR$/DroidPlugin/DroidPlugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/DynamicAppLoader.iml" filepath="$PROJECT_DIR$/DynamicAppLoader.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
