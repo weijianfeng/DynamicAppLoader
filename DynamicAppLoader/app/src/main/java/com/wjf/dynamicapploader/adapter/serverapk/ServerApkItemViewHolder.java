@@ -9,8 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.aspsine.multithreaddownload.DownloadRequest;
 import com.squareup.picasso.Picasso;
 import com.wjf.dynamicapploader.R;
 import com.wjf.dynamicapploader.model.ServerApkItem;
@@ -26,14 +28,21 @@ import butterknife.ButterKnife;
  */
 public class ServerApkItemViewHolder extends RecyclerView.ViewHolder {
 
-    @Bind(R.id.server_apk_item_iv_icon)
-    ImageView mAppIcon; // 图标
-    @Bind(R.id.server_apk_item_tv_name)
-    TextView mAppName; // 标题
-    @Bind(R.id.server_apk_item_tv_brief)
-    TextView mAppBrief; // 简介
-    @Bind(R.id.server_apk_item_button)
-    Button mDownloadButton; // 下载
+    @Bind(R.id.iv_icon)
+    public ImageView mAppIcon; // 图标
+    @Bind(R.id.tv_name)
+    public TextView mAppName; // 标题
+//    @Bind(R.id.server_apk_item_tv_brief)
+//    TextView mAppBrief; // 简介
+    @Bind(R.id.bt_download)
+    public Button mDownloadButton; // 下载
+
+    @Bind(R.id.tv_downloadPerSize)
+    public TextView mDownloadPerSize;
+    @Bind(R.id.tv_status)
+    public TextView mStatus;
+    @Bind(R.id.progressBar)
+    public ProgressBar mProgressBar;
 
     private Context mContext; // 上下文
     private ServerApkItem mServerApkItem;
@@ -53,14 +62,18 @@ public class ServerApkItemViewHolder extends RecyclerView.ViewHolder {
                 .error(R.mipmap.ic_launcher)
                 .into(mAppIcon);
         mAppName.setText(serverApkItem.appName);
-        mAppBrief.setText(serverApkItem.appBrief);
+        //mAppBrief.setText(serverApkItem.appBrief);
+        mDownloadPerSize.setText(serverApkItem.getDownloadPerSize());
+        mStatus.setText(serverApkItem.getStatusText());
+        mDownloadButton.setText(serverApkItem.getButtonText());
+        mProgressBar.setProgress(serverApkItem.getProgress());
 
-        mDownloadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                downloadPlugin(mServerApkItem.appDownloadURL, mServerApkItem.appName);
-            }
-        });
+//        mDownloadButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                downloadPlugin(mServerApkItem.appDownloadURL, mServerApkItem.appName);
+//            }
+//        });
     }
 
     private void downloadPlugin(String apkUrl, String appName) {

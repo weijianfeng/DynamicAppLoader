@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.wjf.dynamicapploader.R;
 import com.wjf.dynamicapploader.adapter.serverapk.ServerApkItemViewHolder;
+import com.wjf.dynamicapploader.listener.DownloadOnItemClickListener;
 import com.wjf.dynamicapploader.model.ServerApkItem;
 
 import java.util.ArrayList;
@@ -23,6 +24,11 @@ public class ServerApkListAdapter extends RecyclerView.Adapter<ServerApkItemView
     private ArrayList<ServerApkItem> mServerApkItems;
     private Activity mActivity;
 
+    private DownloadOnItemClickListener mDownloadOnItemClickListener;
+    public void setDownloadOnItemClickListener(DownloadOnItemClickListener downloadOnItemClickListener) {
+        this.mDownloadOnItemClickListener = downloadOnItemClickListener;
+    }
+
     public ServerApkListAdapter(Activity activity) {
         mActivity = activity;
         mServerApkItems = new ArrayList<>();
@@ -36,8 +42,16 @@ public class ServerApkListAdapter extends RecyclerView.Adapter<ServerApkItemView
     }
 
     @Override
-    public void onBindViewHolder(ServerApkItemViewHolder holder, int position) {
+    public void onBindViewHolder(ServerApkItemViewHolder holder, final int position) {
         holder.bindTo(mServerApkItems.get(position));
+        holder.mDownloadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mDownloadOnItemClickListener != null) {
+                    mDownloadOnItemClickListener.onItemClick(v, position, mServerApkItems.get(position));
+                }
+            }
+        });
     }
 
     @Override
