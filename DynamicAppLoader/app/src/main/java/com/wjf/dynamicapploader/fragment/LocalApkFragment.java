@@ -85,6 +85,14 @@ public class LocalApkFragment extends Fragment{
 //        PluginManager.getInstance().removeServiceConnection(mServiceConnection);
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        if (isVisibleToUser) {
+            initPlugin();
+        }
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
     private void initView() {
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());

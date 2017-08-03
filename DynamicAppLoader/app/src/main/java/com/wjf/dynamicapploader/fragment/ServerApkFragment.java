@@ -71,10 +71,10 @@ public class ServerApkFragment extends Fragment implements DownloadOnItemClickLi
 
     private void initData() {
         LocalApkCache.clear();
-        String mock = "[{\"app_icon\":\"http://pluginapk-plugin.stor.sinaapp.com/youzancoin_icon.png\"," +
-                "\"app_name\":\"有赞币\"," +
+        String mock = "[{\"app_icon\":\"http://flashimapi-plugin.stor.sinaapp.com/plugin_icon.png\"," +
+                "\"app_name\":\"插件\"," +
                 "\"app_brief\":\"an app to appreciate others\"," +
-                "\"app_download_url\":\"http://pluginapk-plugin.stor.sinaapp.com/youzancoin_1.apk\"," +
+                "\"app_download_url\":\"http://flashimapi-plugin.stor.sinaapp.com/plugin.apk\"," +
                 "\"app_package_name\":\"com.wjf.pluginapp\"}]";
 
         LocalApkCache.saveApkList(mock);
