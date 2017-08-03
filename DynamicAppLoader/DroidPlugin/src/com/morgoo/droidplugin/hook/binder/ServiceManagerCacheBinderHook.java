@@ -29,15 +29,15 @@ import android.text.TextUtils;
 import com.morgoo.droidplugin.hook.BaseHookHandle;
 import com.morgoo.droidplugin.hook.Hook;
 import com.morgoo.droidplugin.hook.HookedMethodHandler;
+import com.morgoo.droidplugin.reflect.FieldUtils;
 import com.morgoo.droidplugin.reflect.Utils;
 import com.morgoo.helper.MyProxy;
-import com.morgoo.droidplugin.reflect.FieldUtils;
 import com.morgoo.helper.compat.ServiceManagerCompat;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.UndeclaredThrowableException;
+import java.lang.reflect.Proxy;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +70,11 @@ public class ServiceManagerCacheBinderHook extends Hook implements InvocationHan
             } else {
                 sCache.remove(mServiceName);
                 IBinder mServiceIBinder = ServiceManagerCompat.getService(mServiceName);
+                if (mServiceIBinder == null) {
+                    if (Obj != null && Obj instanceof IBinder && !Proxy.isProxyClass(Obj.getClass())) {
+                        mServiceIBinder = ((IBinder) Obj);
+                    }
+                }
                 if (mServiceIBinder != null) {
                     MyServiceManager.addOriginService(mServiceName, mServiceIBinder);
                     Class clazz = mServiceIBinder.getClass();

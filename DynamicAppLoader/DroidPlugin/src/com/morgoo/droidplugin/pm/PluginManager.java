@@ -43,6 +43,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.text.TextUtils;
 
+import com.morgoo.droidplugin.BuildConfig;
 import com.morgoo.droidplugin.PluginManagerService;
 import com.morgoo.droidplugin.reflect.MethodUtils;
 import com.morgoo.helper.Log;
@@ -60,8 +61,8 @@ import java.util.List;
  */
 public class PluginManager implements ServiceConnection {
 
-    public static final String ACTION_PACKAGE_ADDED = "com.morgoo.doirplugin.PACKAGE_ADDED";
-    public static final String ACTION_PACKAGE_REMOVED = "com.morgoo.doirplugin.PACKAGE_REMOVED";
+    public static final String ACTION_PACKAGE_ADDED = "com.morgoo.droidplugin.PACKAGE_ADDED";
+    public static final String ACTION_PACKAGE_REMOVED = "com.morgoo.droidplugin.PACKAGE_REMOVED";
     public static final String ACTION_DROIDPLUGIN_INIT = "com.morgoo.droidplugin.ACTION_DROIDPLUGIN_INIT";
     public static final String ACTION_MAINACTIVITY_ONCREATE = "com.morgoo.droidplugin.ACTION_MAINACTIVITY_ONCREATE";
     public static final String ACTION_MAINACTIVITY_ONDESTORY = "com.morgoo.droidplugin.ACTION_MAINACTIVITY_ONDESTORY";
@@ -72,7 +73,7 @@ public class PluginManager implements ServiceConnection {
     public static final String EXTRA_PID = "com.morgoo.droidplugin.EXTRA_PID";
     public static final String EXTRA_PACKAGENAME = "com.morgoo.droidplugin.EXTRA_EXTRA_PACKAGENAME";
 
-    public static final String STUB_AUTHORITY_NAME = "com.wjf.dal.droidplugin_stub";
+    public static final String STUB_AUTHORITY_NAME = BuildConfig.AUTHORITY_NAME;
     public static final String EXTRA_APP_PERSISTENT = "com.morgoo.droidplugin.EXTRA_APP_PERSISTENT";
 
 
@@ -921,7 +922,7 @@ public class PluginManager implements ServiceConnection {
         } catch (RemoteException e) {
             throw e;
         } catch (Exception e) {
-            Log.e(TAG, "onActivityDestory", e);
+            Log.e(TAG, "onActivityDestroy", e);
         }
     }
 
@@ -948,7 +949,7 @@ public class PluginManager implements ServiceConnection {
                 Log.w(TAG, "Plugin Package Manager Service not be connect");
             }
         } catch (Exception e) {
-            Log.e(TAG, "onServiceDestory", e);
+            Log.e(TAG, "onServiceDestroy", e);
         }
     }
 
@@ -1021,7 +1022,7 @@ public class PluginManager implements ServiceConnection {
         } catch (RemoteException e) {
             throw e;
         } catch (Exception e) {
-            Log.e(TAG, "onActivtyOnNewIntent", e);
+            Log.e(TAG, "onActivityOnNewIntent", e);
         }
     }
 
